@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  form(action='/users/register' method='post')
+    div(class='form-element')
+      label #{labels.user}:
+      input(name='user' value=user)
+    div(class='form-element')
+      label #{labels.email}:
+      input(name='email' value=email)
+    div(class='form-element')
+      label #{labels.pass}:
+      input(name='pass' type='password' value=pass)
+    div(class='form-element')
+      label #{labels.passrepeat}:
+      input(name='passrepeat' type='password' value=pass)
+    div(class='form-element')
+      input(type="submit" value=labels.submit)
+    
