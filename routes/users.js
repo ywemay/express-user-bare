@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const {getUserByName} = require('./../repo/users.js');
+var users = require('./../repo/users.js');
+var jwt = require('jsonwebtoken');
 
 var reg = {
   labels: {
@@ -36,6 +37,21 @@ router.post('/register', function(req, res) {
   reg.email = req.body.email;
   console.log(reg.user);
   res.render('register', reg);
+});
+
+router.post('/login', function(req, res){
+  users.check(req.body.user, req.body.pass)
+    .then(function(data){
+      console.log('The shit is resolved.')
+      var d = {
+        user: data.user,
+      }
+      res.json({jwt: jwt.sign(d, process.env.JWT_SECRET)});
+    })
+    .catch((err)=>{
+      console.log('Failed to resolve the shit.');
+      res.json({error: err});
+    })
 });
 
 module.exports = router;
